@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Attendance Management System</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <div><p class="eyebrow">ACADEMIC ADMINISTRATION</p><h1>Student Attendance</h1><p class="sub">Seven-period attendance tracking and monthly reporting</p></div>
+  <span class="live"><i></i> System ready</span>
+</header>
+<main>
+  <section class="stats">
+    <article><span>Registered students</span><strong id="studentCount">0</strong></article>
+    <article><span>Marked periods this month</span><strong id="periodCount">0</strong></article>
+    <article><span>Below 75% attendance</span><strong id="lowCount">0</strong></article>
+  </section>
+  <nav>
+  <button class="nav" data-view="students">Students</button>
+  <button class="nav active" data-view="attendance">Daily Attendance</button>
+  <button class="nav" data-view="records">Records</button>
+  <button class="nav" data-view="calculation">Monthly Calculation</button>
+  <button class="nav" data-view="reports">Reports</button>
+</nav>
+  <section id="attendance" class="panel">
+    <div class="panel-head"><div><h2>Mark daily attendance</h2><p>Choose P (Present) or A (Absent) for each period.</p></div><label>Date <input type="date" id="attDate"></label></div>
+    <div class="toolbar"><button class="secondary" id="allPresent">Mark all present</button><button class="secondary" id="allAbsent">Mark all absent</button><button class="primary" id="saveAttendance">Save attendance</button></div>
+    <div class="table-wrap"><table id="attendanceTable"><thead><tr><th>Roll</th><th>Student</th><th>Department</th><th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th><th>P6</th><th>P7</th></tr></thead><tbody></tbody></table></div>
+    <p class="hint">Attendance records are stored on the server in the project's data folder.</p>
+  </section>
+  <section id="students" class="panel hidden">
+    <div class="panel-head"><div><h2>Student management</h2><p>Add and maintain class records.</p></div></div>
+    <form id="studentForm" class="student-form"><input id="roll" placeholder="Roll number" required><input id="name" placeholder="Student name" required><input id="department" placeholder="Department (e.g. CSE-AIML)"><button class="primary">Add student</button></form>
+    <div class="table-wrap"><table><thead><tr><th>Roll</th><th>Name</th><th>Department</th><th>Action</th></tr></thead><tbody id="studentRows"></tbody></table></div>
+  </section>
+<section id="records" class="panel hidden">
+  <div class="panel-head">
+    <div>
+      <h2>Attendance Records</h2>
+      <p>View previously saved attendance for a selected date.</p>
+    </div>
+    <label>
+      Date
+      <input type="date" id="recordsDate">
+    </label>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="loadRecords">View Records</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="recordsTable">
+      <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Student</th>
+          <th>Department</th>
+          <th>P1</th>
+          <th>P2</th>
+          <th>P3</th>
+          <th>P4</th>
+          <th>P5</th>
+          <th>P6</th>
+          <th>P7</th>
+        </tr>
+      </thead>
+      <tbody id="recordsRows"></tbody>
+    </table>
+  </div>
+  <p class="hint">Choose a date and load the saved attendance records.</p>
+</section>
+
+<section id="calculation" class="panel hidden">
+  <div class="panel-head">
+    <div>
+      <h2>Monthly Attendance Calculation</h2>
+      <p>Calculate attendance percentage for each student.</p>
+    </div>
+    <label>
+      Select Month
+      <input type="month" id="calculationMonth">
+    </label>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="calculateAttendance">
+      Calculate Attendance
+    </button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Student</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>Periods</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody id="calculationRows"></tbody>
+    </table>
+  </div>
+</section>
+
+  <section id="reports" class="panel hidden">
+    <div class="panel-head"><div><h2>Monthly attendance report</h2><p>Summary is based on attendance periods actually saved.</p></div><label>Month <input type="month" id="reportMonth"></label></div>
+    <div class="toolbar"><button class="primary" id="loadReport">Generate report</button><button class="secondary" id="exportCsv">Export CSV</button></div>
+    <div class="table-wrap"><table><thead><tr><th>Roll</th><th>Student</th><th>Attended</th><th>Absent</th><th>Working periods</th><th>Attendance</th><th>Status</th></tr></thead><tbody id="reportRows"></tbody></table></div>
+    <p class="hint">The denominator is the number of attendance statuses saved for that student in the selected month. Unmarked periods are not counted.</p>
+  </section>
+  <div id="message" role="status" aria-live="polite"></div>
+</main>
+<footer>Student Attendance Management System · DevOps academic project</footer>
+<script src="/app.js"></script>
+</body>
+</html>
